@@ -1,4 +1,4 @@
-# TOP Javascript Course Project - Weather Site
+# TOP Javascript Course Project - Battleship
 03/28/2022 ~
 
 ## Objectives
