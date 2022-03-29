@@ -26,5 +26,13 @@ const createShip = shipId => {
     }
   };
 
-  return { shipName, shipLength, shipCoordinates, confirmedHits, hit, isSunk };
+  return {
+    shipId,
+    shipName,
+    shipLength,
+    shipCoordinates,
+    confirmedHits,
+    hit,
+    isSunk
+  };
 };
