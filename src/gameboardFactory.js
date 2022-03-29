@@ -1,6 +1,8 @@
 const createGameboard = () => {
   const shipLocations = [];
   const attackedCells = [];
+  const sunkShips = [];
+
   const placeShip = function (ship, ...coordinates) {
     ship.shipCoordinates.push(...coordinates);
     this.shipLocations.push({
@@ -13,9 +15,12 @@ const createGameboard = () => {
     shipLocations.forEach(ship => {
       if (ship.coordinates.indexOf(target) !== -1) {
         const shipIndex = ship.shipId - 1;
-        ships[shipIndex].hit(target);
+        const targetShip = ships[shipIndex];
+        targetShip.hit(target);
+        if (targetShip.isSunk() === true) {
+          this.sunkShips.push(targetShip.shipName);
+        }
       } else {
-        // Only push coordinates if they haven't already been logged
         if (attackedCells.indexOf(target) === -1) {
           attackedCells.push(target);
         }
@@ -23,5 +28,20 @@ const createGameboard = () => {
     });
   };
 
-  return { shipLocations, attackedCells, placeShip, receiveAttack };
+  const defeat = function () {
+    if (this.sunkShips.length === 5) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  return {
+    shipLocations,
+    attackedCells,
+    sunkShips,
+    placeShip,
+    receiveAttack,
+    defeat
+  };
 };

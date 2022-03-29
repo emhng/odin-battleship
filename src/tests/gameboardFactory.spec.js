@@ -50,4 +50,25 @@ describe('createGameboard', () => {
     gameboard.receiveAttack('A3', ships);
     expect(gameboard.attackedCells).toEqual(['A3']);
   });
+  test('Logs sunk ships', function () {
+    const carrier = createShip(1);
+    const battleship = createShip(2);
+    const destroyer = createShip(3);
+    const submarine = createShip(4);
+    const patrolBoat = createShip(5);
+    const ships = [carrier, battleship, destroyer, submarine, patrolBoat];
+    const gameboard = createGameboard();
+
+    gameboard.placeShip(patrolBoat, 'A1', 'A2');
+    gameboard.receiveAttack('A1', ships);
+    gameboard.receiveAttack('A2', ships);
+
+    expect(gameboard.sunkShips).toEqual(['Patrol Boat']);
+  });
+  test('Defeat is true when all ships are sunk', function () {
+    const gameboard = createGameboard();
+    gameboard.sunkShips.push('1', '2', '3', '4', '5');
+
+    expect(gameboard.defeat()).toBe(true);
+  });
 });
