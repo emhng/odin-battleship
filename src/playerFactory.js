@@ -17,3 +17,5 @@ const createPlayer = playerType => {
 
   return { id, turn, type, round };
 };
+
+export { createPlayer };

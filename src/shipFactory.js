@@ -36,3 +36,5 @@ const createShip = shipId => {
     isSunk
   };
 };
+
+export { createShip };

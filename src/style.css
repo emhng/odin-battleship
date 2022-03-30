@@ -1,0 +1,86 @@
+/* ibm-plex-mono-regular - latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('./fonts/ibm-plex-mono-v11-latin-regular.woff2') format('woff2'),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url('./fonts/ibm-plex-mono-v11-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+:root,
+input {
+  font-family: 'IBM Plex Mono', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  background-color: #1e231d;
+  color: #cbfbee;
+  overflow: hidden;
+}
+
+.hflex {
+  display: flex;
+}
+
+#game {
+  gap: 1rem;
+}
+
+#radar {
+  width: 50%;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.437);
+}
+
+#main {
+  width: 50%;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  height: fit-content;
+  border: solid 2px #4b6e59;
+}
+
+.cell {
+  width: 100%;
+  padding-bottom: 100%;
+  border: solid 1px #4b6e59;
+}
+
+#radar div.grid {
+  width: 75%;
+}
+
+#radar div.cell {
+  width: 100%;
+  padding-bottom: 100%;
+}

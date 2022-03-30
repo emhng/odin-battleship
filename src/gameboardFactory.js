@@ -45,3 +45,5 @@ const createGameboard = () => {
     defeat
   };
 };
+
+export { createGameboard };
