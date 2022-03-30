@@ -12,20 +12,24 @@ const createGameboard = () => {
   };
 
   const receiveAttack = function (target, ships) {
-    shipLocations.forEach(ship => {
-      if (ship.coordinates.indexOf(target) !== -1) {
+    const isMiss = shipLocations.every(ship => {
+      if (ship.coordinates.includes(target) === true) {
         const shipIndex = ship.shipId - 1;
         const targetShip = ships[shipIndex];
         targetShip.hit(target);
         if (targetShip.isSunk() === true) {
           this.sunkShips.push(targetShip.shipName);
         }
+        return false;
       } else {
-        if (attackedCells.indexOf(target) === -1) {
-          attackedCells.push(target);
-        }
+        return true;
       }
     });
+    if (isMiss === true) {
+      if (attackedCells.indexOf(target) === -1) {
+        attackedCells.push(target);
+      }
+    }
   };
 
   const defeat = function () {
