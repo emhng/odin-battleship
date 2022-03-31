@@ -16,7 +16,7 @@
             <h1>INCOMING ATTACK</h1>
           </div>
         </div>
-        <div class="" id="radar">
+        <div class="vflex" id="radar">
           <div class="hflex" id="label">
             <h2>RADAR</h2>
             <h2 class="blink" id="player-turn">MISSILES READY</h2>
@@ -86,13 +86,63 @@
               <div class="cell" data-coord="G7"></div>
             </div>
           </div>
-          <div id="ships">
-            <h3>Enemy Ships</h3>
+          <div class="stack" id="ships">
+            <h3>ENEMY SHIPS</h3>
+            <div id="enemy-carrier">
+              <p>CARRIER</p>
+              <div class="ship-grid carrier">
+                <div class="hit-marker" data-ship-id="1"></div>
+                <div class="hit-marker" data-ship-id="1"></div>
+                <div class="hit-marker" data-ship-id="1"></div>
+                <div class="hit-marker" data-ship-id="1"></div>
+                <div class="hit-marker" data-ship-id="1"></div>
+              </div>
+            </div>
+            <div id="enemy-battleship">
+              <p>BATTLESHIP</p>
+              <div class="ship-grid battleship">
+                <div class="hit-marker" data-ship-id="2"></div>
+                <div class="hit-marker" data-ship-id="2"></div>
+                <div class="hit-marker" data-ship-id="2"></div>
+                <div class="hit-marker" data-ship-id="2"></div>
+                <div class="hit-marker"></div>
+              </div>
+            </div>
+            <div id="enemy-destroyer">
+              <p>DESTROYER</p>
+              <div class="ship-grid destroyer">
+                <div class="hit-marker" data-ship-id="3"></div>
+                <div class="hit-marker" data-ship-id="3"></div>
+                <div class="hit-marker" data-ship-id="3"></div>
+                <div class="hit-marker"></div>
+                <div class="hit-marker"></div>
+              </div>
+            </div>
+            <div id="enemy-sub">
+              <p>SUBMARINE</p>
+              <div class="ship-grid submarine">
+                <div class="hit-marker" data-ship-id="4"></div>
+                <div class="hit-marker" data-ship-id="4"></div>
+                <div class="hit-marker" data-ship-id="4"></div>
+                <div class="hit-marker"></div>
+                <div class="hit-marker"></div>
+              </div>
+            </div>
+            <div id="enemy-patrol">
+              <p>PATROL BOAT</p>
+              <div class="ship-grid patrol">
+                <div class="hit-marker" data-ship-id="5"></div>
+                <div class="hit-marker" data-ship-id="5"></div>
+                <div class="hit-marker"></div>
+                <div class="hit-marker"></div>
+                <div class="hit-marker"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div id="main">
-        <h1>Fleet Position</h1>
+      <div class="vflex" id="main">
+        <h1>FLEET POSITION</h1>
         <div class="grid">
           <div class="col" data-col="1">
             <div class="cell" data-coord="A1"></div>
