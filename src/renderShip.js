@@ -21,7 +21,7 @@ const renderAttack = (coordinate, gameboard, player) => {
     );
   }
 
-  if (gameboard.attackedCells.indexOf(coordinate) !== -1) {
+  if (gameboard.missCells.indexOf(coordinate) !== -1) {
     targetCell.classList.add('miss');
   } else {
     targetCell.classList.add('hit');

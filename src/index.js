@@ -56,10 +56,23 @@ cpuBoard.placeShip(cpuDestroyer, 'G2', 'G3', 'G4');
 cpuBoard.placeShip(cpuSubmarine, 'E6', 'F6', 'G6');
 cpuBoard.placeShip(cpuPatrolBoat, 'A7', 'B7');
 
-// Allowing player to attack CPU board
 const radarGridEl = document.querySelector('div#radar div.grid');
 radarGridEl.addEventListener('click', target => {
-  const attackCoordinates = target.target.dataset.coord;
-  cpuBoard.receiveAttack(attackCoordinates, cpuShips);
-  renderAttack(attackCoordinates, cpuBoard, player);
+  // Allowing player to attack CPU board
+  if (player.turn === true) {
+    const attackCoordinates = target.target.dataset.coord;
+    cpuBoard.receiveAttack(attackCoordinates, cpuShips);
+    renderAttack(attackCoordinates, cpuBoard, player);
+    player.turn = false;
+
+    //CPU logic to attack player board
+    if (player.turn === false) {
+      setTimeout(() => {
+        let cpuAttackCoordinates = cpu.getAttackCoordinates(playerBoard);
+        playerBoard.receiveAttack(cpuAttackCoordinates, playerShips);
+        renderAttack(cpuAttackCoordinates, playerBoard, cpu);
+        player.turn = true;
+      }, 3000);
+    }
+  }
 });
