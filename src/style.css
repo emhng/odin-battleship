@@ -39,6 +39,7 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   background-color: #1e231d;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.9' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
   color: #cbfbee;
   overflow: hidden;
 }
@@ -47,18 +48,30 @@ body {
   display: flex;
 }
 
-#game {
-  gap: 1rem;
+.hidden {
+  display: none;
 }
 
-#radar {
-  width: 50%;
+.disable {
+  opacity: 0.1;
+}
+
+#container {
+  width: 60%;
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.437);
 }
 
 #main {
-  width: 50%;
+  width: 40%;
+}
+
+#wait {
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 44%;
 }
 
 .grid {
@@ -73,6 +86,11 @@ body {
   width: 100%;
   padding-bottom: 100%;
   border: solid 1px #4b6e59;
+}
+
+#label {
+  justify-content: space-between;
+  width: 75%;
 }
 
 #radar div.grid {
@@ -99,4 +117,49 @@ body {
 .miss {
   border: 1px dashed #ffffff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='0.6' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+#prompt {
+  border: 0.5rem double #4b6e59;
+  background-color: #4b6e5927;
+  padding: 1rem;
+  z-index: 1;
+}
+
+.prompt-blink {
+  animation: blinkPrompt 0.8s linear infinite;
+}
+
+.blink {
+  animation: blink 0.2s linear 3;
+}
+
+#radar,
+#wait {
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+
+#main {
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+
+@keyframes blinkPrompt {
+  from {
+    border: 0.5rem solid #4b6e59;
+    padding: 1rem;
+  }
+  to {
+    padding: 1.5rem;
+  }
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.2;
+  }
 }

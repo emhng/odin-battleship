@@ -3,8 +3,9 @@ import './style.css';
 import { createPlayer } from './playerFactory';
 import { createShip } from './shipFactory';
 import { createGameboard } from './gameboardFactory';
-import { renderShip } from './renderShip';
-import { renderAttack } from './renderShip';
+import { renderShip } from './renderDOM';
+import { renderAttack } from './renderDOM';
+import { displayPrompt } from './renderDOM';
 
 // Player settings
 const player = createPlayer('human');
@@ -68,10 +69,18 @@ radarGridEl.addEventListener('click', target => {
     //CPU logic to attack player board
     if (player.turn === false) {
       setTimeout(() => {
+        displayPrompt();
+      }, 1000);
+
+      setTimeout(() => {
         let cpuAttackCoordinates = cpu.getAttackCoordinates(playerBoard);
         playerBoard.receiveAttack(cpuAttackCoordinates, playerShips);
         renderAttack(cpuAttackCoordinates, playerBoard, cpu);
         player.turn = true;
+
+        setTimeout(() => {
+          displayPrompt();
+        }, 2000);
       }, 3000);
     }
   }

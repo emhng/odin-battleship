@@ -8,77 +8,87 @@
     <script src="main.js" defer></script>
   </head>
   <body>
-    <div id="start-screen"></div>
     <div class="hflex" id="game">
-      <div id="radar">
-        <h1>Radar</h1>
-        <div class="grid">
-          <div class="col" data-col="1">
-            <div class="cell" data-coord="A1"></div>
-            <div class="cell" data-coord="A2"></div>
-            <div class="cell" data-coord="A3"></div>
-            <div class="cell" data-coord="A4"></div>
-            <div class="cell" data-coord="A5"></div>
-            <div class="cell" data-coord="A6"></div>
-            <div class="cell" data-coord="A7"></div>
-          </div>
-          <div class="col" data-col="2">
-            <div class="cell" data-coord="B1"></div>
-            <div class="cell" data-coord="B2"></div>
-            <div class="cell" data-coord="B3"></div>
-            <div class="cell" data-coord="B4"></div>
-            <div class="cell" data-coord="B5"></div>
-            <div class="cell" data-coord="B6"></div>
-            <div class="cell" data-coord="B7"></div>
-          </div>
-          <div class="col" data-col="3">
-            <div class="cell" data-coord="C1"></div>
-            <div class="cell" data-coord="C2"></div>
-            <div class="cell" data-coord="C3"></div>
-            <div class="cell" data-coord="C4"></div>
-            <div class="cell" data-coord="C5"></div>
-            <div class="cell" data-coord="C6"></div>
-            <div class="cell" data-coord="C7"></div>
-          </div>
-          <div class="col" data-col="4">
-            <div class="cell" data-coord="D1"></div>
-            <div class="cell" data-coord="D2"></div>
-            <div class="cell" data-coord="D3"></div>
-            <div class="cell" data-coord="D4"></div>
-            <div class="cell" data-coord="D5"></div>
-            <div class="cell" data-coord="D6"></div>
-            <div class="cell" data-coord="D7"></div>
-          </div>
-          <div class="col" data-col="5">
-            <div class="cell" data-coord="E1"></div>
-            <div class="cell" data-coord="E2"></div>
-            <div class="cell" data-coord="E3"></div>
-            <div class="cell" data-coord="E4"></div>
-            <div class="cell" data-coord="E5"></div>
-            <div class="cell" data-coord="E6"></div>
-            <div class="cell" data-coord="E7"></div>
-          </div>
-          <div class="col" data-col="6">
-            <div class="cell" data-coord="F1"></div>
-            <div class="cell" data-coord="F2"></div>
-            <div class="cell" data-coord="F3"></div>
-            <div class="cell" data-coord="F4"></div>
-            <div class="cell" data-coord="F5"></div>
-            <div class="cell" data-coord="F6"></div>
-            <div class="cell" data-coord="F7"></div>
-          </div>
-          <div class="col" data-col="7">
-            <div class="cell" data-coord="G1"></div>
-            <div class="cell" data-coord="G2"></div>
-            <div class="cell" data-coord="G3"></div>
-            <div class="cell" data-coord="G4"></div>
-            <div class="cell" data-coord="G5"></div>
-            <div class="cell" data-coord="G6"></div>
-            <div class="cell" data-coord="G7"></div>
+      <div id="container">
+        <div class="hflex" id="wait">
+          <div class="hidden" id="prompt">
+            <p>/// WARNING</p>
+            <h1>INCOMING ATTACK</h1>
           </div>
         </div>
-        <div id="ships">
-          <h3>Enemy Ships</h3>
+        <div class="" id="radar">
+          <div class="hflex" id="label">
+            <h2>RADAR</h2>
+            <h2 class="blink" id="player-turn">MISSILES READY</h2>
+          </div>
+          <div class="grid">
+            <div class="col" data-col="1">
+              <div class="cell" data-coord="A1"></div>
+              <div class="cell" data-coord="A2"></div>
+              <div class="cell" data-coord="A3"></div>
+              <div class="cell" data-coord="A4"></div>
+              <div class="cell" data-coord="A5"></div>
+              <div class="cell" data-coord="A6"></div>
+              <div class="cell" data-coord="A7"></div>
+            </div>
+            <div class="col" data-col="2">
+              <div class="cell" data-coord="B1"></div>
+              <div class="cell" data-coord="B2"></div>
+              <div class="cell" data-coord="B3"></div>
+              <div class="cell" data-coord="B4"></div>
+              <div class="cell" data-coord="B5"></div>
+              <div class="cell" data-coord="B6"></div>
+              <div class="cell" data-coord="B7"></div>
+            </div>
+            <div class="col" data-col="3">
+              <div class="cell" data-coord="C1"></div>
+              <div class="cell" data-coord="C2"></div>
+              <div class="cell" data-coord="C3"></div>
+              <div class="cell" data-coord="C4"></div>
+              <div class="cell" data-coord="C5"></div>
+              <div class="cell" data-coord="C6"></div>
+              <div class="cell" data-coord="C7"></div>
+            </div>
+            <div class="col" data-col="4">
+              <div class="cell" data-coord="D1"></div>
+              <div class="cell" data-coord="D2"></div>
+              <div class="cell" data-coord="D3"></div>
+              <div class="cell" data-coord="D4"></div>
+              <div class="cell" data-coord="D5"></div>
+              <div class="cell" data-coord="D6"></div>
+              <div class="cell" data-coord="D7"></div>
+            </div>
+            <div class="col" data-col="5">
+              <div class="cell" data-coord="E1"></div>
+              <div class="cell" data-coord="E2"></div>
+              <div class="cell" data-coord="E3"></div>
+              <div class="cell" data-coord="E4"></div>
+              <div class="cell" data-coord="E5"></div>
+              <div class="cell" data-coord="E6"></div>
+              <div class="cell" data-coord="E7"></div>
+            </div>
+            <div class="col" data-col="6">
+              <div class="cell" data-coord="F1"></div>
+              <div class="cell" data-coord="F2"></div>
+              <div class="cell" data-coord="F3"></div>
+              <div class="cell" data-coord="F4"></div>
+              <div class="cell" data-coord="F5"></div>
+              <div class="cell" data-coord="F6"></div>
+              <div class="cell" data-coord="F7"></div>
+            </div>
+            <div class="col" data-col="7">
+              <div class="cell" data-coord="G1"></div>
+              <div class="cell" data-coord="G2"></div>
+              <div class="cell" data-coord="G3"></div>
+              <div class="cell" data-coord="G4"></div>
+              <div class="cell" data-coord="G5"></div>
+              <div class="cell" data-coord="G6"></div>
+              <div class="cell" data-coord="G7"></div>
+            </div>
+          </div>
+          <div id="ships">
+            <h3>Enemy Ships</h3>
+          </div>
         </div>
       </div>
       <div id="main">
