@@ -113,7 +113,8 @@ h2#player-turn {
 }
 
 #radar {
-  margin: 2rem 5vw;
+  width: 67%;
+  margin: 2rem auto;
 }
 
 #radar div.grid {
