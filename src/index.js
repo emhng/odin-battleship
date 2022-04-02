@@ -66,14 +66,17 @@ radarGridEl.addEventListener('click', target => {
     renderAttack(attackCoordinates, cpuBoard, player);
     player.turn = false;
 
-    //CPU logic to attack player board
+    // CPU logic to attack player board
     if (player.turn === false) {
       setTimeout(() => {
         displayPrompt();
       }, 1000);
 
       setTimeout(() => {
-        let cpuAttackCoordinates = cpu.getAttackCoordinates(playerBoard);
+        let cpuAttackCoordinates;
+        // Pick a random coordinate
+        cpuAttackCoordinates = cpu.getAttackCoordinates(playerBoard);
+
         playerBoard.receiveAttack(cpuAttackCoordinates, playerShips);
         renderAttack(cpuAttackCoordinates, playerBoard, cpu);
         player.turn = true;
