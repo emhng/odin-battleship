@@ -1,3 +1,4 @@
+import { createShip } from './shipFactory';
 const createPlayer = playerType => {
   let id = '';
   let turn = '';
@@ -12,6 +13,14 @@ const createPlayer = playerType => {
     turn = false;
     type = 'CPU';
   }
+
+  const ships = [
+    createShip(1),
+    createShip(2),
+    createShip(3),
+    createShip(4),
+    createShip(5)
+  ];
 
   const randomize = array => {
     //Returns a randomized integer used as an array index
@@ -180,13 +189,11 @@ const createPlayer = playerType => {
     }
   };
 
-  const round = 1;
-
   return {
     id,
     turn,
     type,
-    round,
+    ships,
     getAttackCoordinates,
     getAdjacentCoordinates
   };

@@ -1,7 +1,6 @@
 import './style.css';
 
 import { createPlayer } from './playerFactory';
-import { createShip } from './shipFactory';
 import { createGameboard } from './gameboardFactory';
 import { renderShip } from './renderDOM';
 import { renderAttack } from './renderDOM';
@@ -9,15 +8,7 @@ import { displayPrompt } from './renderDOM';
 
 // Player settings
 const player = createPlayer('human');
-
-const playerShips = [
-  createShip(1),
-  createShip(2),
-  createShip(3),
-  createShip(4),
-  createShip(5)
-];
-
+const playerShips = player.ships;
 const [carrier, battleship, destroyer, submarine, patrolBoat] = playerShips;
 
 const playerBoard = createGameboard();
@@ -33,15 +24,7 @@ playerShips.forEach(ship => {
 
 // CPU settings
 const cpu = createPlayer('CPU');
-
-const cpuShips = [
-  createShip(1),
-  createShip(2),
-  createShip(3),
-  createShip(4),
-  createShip(5)
-];
-
+const cpuShips = cpu.ships;
 const [
   cpuCarrier,
   cpuBattleship,
