@@ -4,7 +4,7 @@ const createPlayer = playerType => {
   let turn = '';
   let type = '';
 
-  if (playerType === 'human') {
+  if (playerType === undefined) {
     id = 1;
     turn = true;
     type = 'player';
@@ -32,11 +32,23 @@ const createPlayer = playerType => {
 
   const getRandomArray = array => {
     const randomIndex = randomize(array);
+    //Returns a random array item from target array
     return array[randomIndex];
   };
 
-  const getShipCoordinates = ship => {
-    const coordinates = [];
+  const getShipCoordinates = function (ship, cpuBoard) {
+    const orientation = ['vertical', 'horizontal'];
+    const randomOrientation = getRandomArray(orientation);
+    console.log(randomOrientation);
+    let coordinates;
+
+    if (randomOrientation === 'vertical') {
+      coordinates = this.verticalShipCoordinates(ship, cpuBoard);
+    }
+
+    if (randomOrientation === 'horizontal') {
+      coordinates = this.horizontalShipCoordinates(ship, cpuBoard);
+    }
 
     return coordinates;
   };
@@ -52,12 +64,14 @@ const createPlayer = playerType => {
       5: 'F',
       6: 'G'
     };
+
+    //Column letter stays the same, but row number changes
     const randomColumnIndex = getRandomArray(availableColumns);
     const column = columnKey[randomColumnIndex];
-    let possiblePositions;
+    let possibleRows;
 
     if (ship.shipId === 1) {
-      possiblePositions = [
+      possibleRows = [
         [1, 2, 3, 4, 5],
         [2, 3, 4, 5, 6],
         [3, 4, 5, 6, 7]
@@ -68,7 +82,7 @@ const createPlayer = playerType => {
     }
 
     if (ship.shipId === 2) {
-      possiblePositions = [
+      possibleRows = [
         [1, 2, 3, 4],
         [2, 3, 4, 5],
         [3, 4, 5, 6],
@@ -80,7 +94,7 @@ const createPlayer = playerType => {
     }
 
     if (ship.shipId === 3 || ship.shipId === 4) {
-      possiblePositions = [
+      possibleRows = [
         [1, 2, 3],
         [2, 3, 4],
         [3, 4, 5],
@@ -90,7 +104,7 @@ const createPlayer = playerType => {
     }
 
     if (ship.shipId === 5) {
-      possiblePositions = [
+      possibleRows = [
         [1, 2],
         [2, 3],
         [3, 4],
@@ -100,10 +114,65 @@ const createPlayer = playerType => {
       ];
     }
 
-    const positionArray = getRandomArray(possiblePositions);
+    const positionArray = getRandomArray(possibleRows);
     const coordinates = positionArray.map(row => {
       return column + row;
     });
+
+    return coordinates;
+  };
+
+  const horizontalShipCoordinates = (ship, cpuBoard) => {
+    const availableColumns = cpuBoard.gridColumns;
+    const rows = [1, 2, 3, 4, 5, 6, 7];
+
+    //Row number stays the same, but column letter changes
+    const row = getRandomArray(rows);
+    let possibleColumns;
+
+    if (ship.shipId === 1) {
+      possibleColumns = [
+        ['A', 'B', 'C', 'D', 'E'],
+        ['B', 'C', 'D', 'E', 'F'],
+        ['C', 'D', 'E', 'F', 'G']
+      ];
+    }
+
+    if (ship.shipId === 2) {
+      possibleColumns = [
+        ['A', 'B', 'C', 'D'],
+        ['B', 'C', 'D', 'E'],
+        ['C', 'D', 'E', 'F'],
+        ['D', 'E', 'F', 'G']
+      ];
+    }
+
+    if (ship.shipId === 3 || ship.shipId === 4) {
+      possibleColumns = [
+        ['A', 'B', 'C'],
+        ['B', 'C', 'D'],
+        ['C', 'D', 'E'],
+        ['D', 'E', 'F'],
+        ['E', 'F', 'G']
+      ];
+    }
+
+    if (ship.shipId === 5) {
+      possibleColumns = [
+        ['A', 'B'],
+        ['B', 'C'],
+        ['C', 'D'],
+        ['D', 'E'],
+        ['E', 'F'],
+        ['F', 'G']
+      ];
+    }
+
+    const positionArray = getRandomArray(possibleColumns);
+    const coordinates = positionArray.map(column => {
+      return column + row;
+    });
+
     return coordinates;
   };
 
@@ -274,7 +343,9 @@ const createPlayer = playerType => {
     turn,
     type,
     ships,
+    getShipCoordinates,
     verticalShipCoordinates,
+    horizontalShipCoordinates,
     getAttackCoordinates,
     getAdjacentCoordinates
   };

@@ -7,7 +7,7 @@ import { renderAttack } from './renderDOM';
 import { displayPrompt } from './renderDOM';
 
 // Player settings
-const player = createPlayer('human');
+const player = createPlayer();
 const playerShips = player.ships;
 const [carrier, battleship, destroyer, submarine, patrolBoat] = playerShips;
 
@@ -25,22 +25,16 @@ playerShips.forEach(ship => {
 // CPU settings
 const cpu = createPlayer('CPU');
 const cpuShips = cpu.ships;
-const [
-  cpuCarrier,
-  cpuBattleship,
-  cpuDestroyer,
-  cpuSubmarine,
-  cpuPatrolBoat
-] = cpuShips;
 
 const cpuBoard = createGameboard();
 
 cpuShips.forEach(ship => {
-  const randomShipCoords = cpu.verticalShipCoordinates(ship, cpuBoard);
+  const randomShipCoords = cpu.getShipCoordinates(ship, cpuBoard);
   cpuBoard.placeShip(ship, ...randomShipCoords);
   renderShip(ship, 'CPU');
 });
 
+//Game progresses when user clicks on enemy grid
 const radarGridEl = document.querySelector('div#radar div.grid');
 radarGridEl.addEventListener('click', target => {
   // Allowing player to attack CPU board
