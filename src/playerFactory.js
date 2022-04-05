@@ -3,6 +3,7 @@ const createPlayer = playerType => {
   let id = '';
   let turn = '';
   let type = '';
+
   if (playerType === 'human') {
     id = 1;
     turn = true;
@@ -22,9 +23,88 @@ const createPlayer = playerType => {
     createShip(5)
   ];
 
+  // All functions below are for CPU player logic
+
   const randomize = array => {
     //Returns a randomized integer used as an array index
     return Math.floor(Math.random() * array.length);
+  };
+
+  const getRandomArray = array => {
+    const randomIndex = randomize(array);
+    return array[randomIndex];
+  };
+
+  const getShipCoordinates = ship => {
+    const coordinates = [];
+
+    return coordinates;
+  };
+
+  const verticalShipCoordinates = (ship, cpuBoard) => {
+    const availableColumns = cpuBoard.gridColumns;
+    const columnKey = {
+      0: 'A',
+      1: 'B',
+      2: 'C',
+      3: 'D',
+      4: 'E',
+      5: 'F',
+      6: 'G'
+    };
+    const randomColumnIndex = getRandomArray(availableColumns);
+    const column = columnKey[randomColumnIndex];
+    let possiblePositions;
+
+    if (ship.shipId === 1) {
+      possiblePositions = [
+        [1, 2, 3, 4, 5],
+        [2, 3, 4, 5, 6],
+        [3, 4, 5, 6, 7]
+      ];
+      //Remove column so that other ships cannot be placed in same column
+      const index = availableColumns.indexOf(randomColumnIndex);
+      availableColumns.splice(index, 1);
+    }
+
+    if (ship.shipId === 2) {
+      possiblePositions = [
+        [1, 2, 3, 4],
+        [2, 3, 4, 5],
+        [3, 4, 5, 6],
+        [4, 5, 6, 7]
+      ];
+      //Remove column so that other ships cannot be placed in same column
+      const index = availableColumns.indexOf(randomColumnIndex);
+      availableColumns.splice(index, 1);
+    }
+
+    if (ship.shipId === 3 || ship.shipId === 4) {
+      possiblePositions = [
+        [1, 2, 3],
+        [2, 3, 4],
+        [3, 4, 5],
+        [4, 5, 6],
+        [5, 6, 7]
+      ];
+    }
+
+    if (ship.shipId === 5) {
+      possiblePositions = [
+        [1, 2],
+        [2, 3],
+        [3, 4],
+        [4, 5],
+        [5, 6],
+        [6, 7]
+      ];
+    }
+
+    const positionArray = getRandomArray(possiblePositions);
+    const coordinates = positionArray.map(row => {
+      return column + row;
+    });
+    return coordinates;
   };
 
   const getAttackCoordinates = function (gameboard) {
@@ -194,6 +274,7 @@ const createPlayer = playerType => {
     turn,
     type,
     ships,
+    verticalShipCoordinates,
     getAttackCoordinates,
     getAdjacentCoordinates
   };

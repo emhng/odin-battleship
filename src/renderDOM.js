@@ -1,12 +1,20 @@
-const renderShip = ship => {
+const renderShip = (ship, player) => {
   const coordinates = ship.shipCoordinates;
-
-  coordinates.forEach(coordinate => {
-    const targetCell = document.querySelector(
-      `div#main div.grid div.cell[data-coord="${coordinate}"]`
-    );
-    targetCell.classList.add('ship');
-  });
+  if (player === undefined) {
+    coordinates.forEach(coordinate => {
+      const targetCell = document.querySelector(
+        `div#main div.grid div.cell[data-coord="${coordinate}"]`
+      );
+      targetCell.classList.add('ship');
+    });
+  } else {
+    coordinates.forEach(coordinate => {
+      const targetCell = document.querySelector(
+        `div#radar div.grid div.cell[data-coord="${coordinate}"]`
+      );
+      targetCell.classList.add('ship');
+    });
+  }
 };
 
 const renderAttack = (coordinate, gameboard, player) => {

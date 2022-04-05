@@ -34,11 +34,12 @@ const [
 ] = cpuShips;
 
 const cpuBoard = createGameboard();
-cpuBoard.placeShip(cpuCarrier, 'A1', 'B1', 'C1', 'D1', 'E1');
-cpuBoard.placeShip(cpuBattleship, 'C3', 'C4', 'C5', 'C6');
-cpuBoard.placeShip(cpuDestroyer, 'G2', 'G3', 'G4');
-cpuBoard.placeShip(cpuSubmarine, 'E6', 'F6', 'G6');
-cpuBoard.placeShip(cpuPatrolBoat, 'A7', 'B7');
+
+cpuShips.forEach(ship => {
+  const randomShipCoords = cpu.verticalShipCoordinates(ship, cpuBoard);
+  cpuBoard.placeShip(ship, ...randomShipCoords);
+  renderShip(ship, 'CPU');
+});
 
 const radarGridEl = document.querySelector('div#radar div.grid');
 radarGridEl.addEventListener('click', target => {
