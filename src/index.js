@@ -34,6 +34,8 @@ cpuShips.forEach(ship => {
   renderShip(ship, 'CPU');
 });
 
+console.log(cpuBoard.shipLocations);
+
 //Game progresses when user clicks on enemy grid
 const radarGridEl = document.querySelector('div#radar div.grid');
 radarGridEl.addEventListener('click', target => {

@@ -41,7 +41,6 @@ const createPlayer = playerType => {
     const randomOrientation = getRandomArray(orientation);
     console.log(randomOrientation);
     let coordinates;
-
     if (randomOrientation === 'vertical') {
       coordinates = this.verticalShipCoordinates(ship, cpuBoard);
     }
@@ -78,9 +77,18 @@ const createPlayer = playerType => {
       cpuBoard.shipLocations[index].shipOrientation === 'horizontal';
 
     if (horizontalShip) {
-      const [shipColumn, shipRow] = getColumnRow(index, cpuBoard);
+      //const [shipColumn, shipRow] = getColumnRow(index, cpuBoard);
 
-      if (shipColumn === column) {
+      const coordinateArray = cpuBoard.shipLocations[index].coordinates;
+      const overlap = coordinateArray.find(coordinate =>
+        coordinate.includes(column)
+      );
+
+      if (overlap !== undefined) {
+        const [shipColumn, shipRow] = overlap;
+        //Need to get ALL the columns from horizontal
+        //ex: carrier is A1 B1 C1 D1 E1
+        //Need to make sure you check that your column isn't in the above
         //Vertical ship can be in the same column as horizontal ship but it cannot overlap rows
         const filteredRows = possibleRows.filter(rowPattern => {
           if (rowPattern.indexOf(+shipRow) === -1) {
@@ -110,10 +118,14 @@ const createPlayer = playerType => {
       cpuBoard.shipLocations[index].shipOrientation === 'vertical';
 
     if (verticalShip) {
-      const [shipColumn, shipRow] = getColumnRow(index, cpuBoard);
+      const coordinateArray = cpuBoard.shipLocations[index].coordinates;
+      const overlap = coordinateArray.find(coordinate =>
+        coordinate.includes(row)
+      );
 
-      if (shipRow === row) {
-        //Change what column
+      if (overlap !== undefined) {
+        const [shipColumn] = overlap;
+        //Change what column is allowed if there is row overlap found
         const filteredColumns = possibleColumns.filter(columnPattern => {
           if (columnPattern.indexOf(shipColumn) === -1) {
             return columnPattern;
@@ -228,6 +240,10 @@ const createPlayer = playerType => {
           possibleRows = isHorizontalDestroyer;
         }
       }
+
+      //Remove column so that other ships cannot be placed in same column
+      const index = availableColumns.indexOf(randomColumnIndex);
+      availableColumns.splice(index, 1);
     }
 
     if (ship.shipId === 5) {
@@ -288,6 +304,7 @@ const createPlayer = playerType => {
         possibleRows = isHorizontalSubmarine;
       }
     }
+
     const positionArray = getRandomArray(possibleRows);
     const coordinates = positionArray.map(row => {
       return column + row;
@@ -385,6 +402,9 @@ const createPlayer = playerType => {
           possibleColumns = isVerticalDestroyer;
         }
       }
+      //Remove row so that other ships cannot be placed in same row
+      const index = availableRows.indexOf(row);
+      availableRows.splice(index, 1);
     }
 
     if (ship.shipId === 5) {
@@ -396,9 +416,6 @@ const createPlayer = playerType => {
         ['E', 'F'],
         ['F', 'G']
       ];
-
-      const submarine = cpuBoard.shipLocations[3];
-      console.log(submarine);
       //Check if carrier is vertical
       const isVerticalCarrier = getViableHorizontalRows(
         0,
@@ -481,143 +498,6 @@ const createPlayer = playerType => {
     return targetCoordinate;
   };
 
-  const getHorizontalCoordinates = function (
-    previousAttack,
-    availableCoordinates
-  ) {
-    //Only need to change column
-    let targetCoordinate;
-    let [column, row] = [...previousAttack];
-    const columnDownKey = {
-      A: 'B',
-      B: 'C',
-      C: 'D',
-      D: 'E',
-      E: 'F',
-      F: 'G',
-      G: 'F'
-    };
-    const columnUpKey = {
-      A: 'B',
-      B: 'A',
-      C: 'B',
-      D: 'C',
-      E: 'D',
-      F: 'E',
-      G: 'F'
-    };
-    const upDown = [columnUpKey, columnDownKey];
-    const randomKeyIndex = randomize(upDown);
-    const columnKey = upDown[randomKeyIndex];
-    const nextColumn = columnKey[column];
-    const desiredCoordinate = nextColumn + row;
-
-    const gridIndexKey = {
-      A: 0,
-      B: 1,
-      C: 2,
-      D: 3,
-      E: 4,
-      F: 5,
-      G: 6
-    };
-    const targetColIndex = gridIndexKey[nextColumn];
-    const gridColArray = availableCoordinates[targetColIndex];
-    const desiredCoordinateIndex = gridColArray.indexOf(desiredCoordinate);
-    let coordinateIndex;
-
-    // Make sure generated coordinate is still available to attack
-    if (desiredCoordinateIndex !== -1) {
-      targetCoordinate = gridColArray[desiredCoordinateIndex];
-      coordinateIndex = desiredCoordinateIndex;
-    } else {
-      // If desired coordinate is not available for attack, select random coordinate from the column array
-      coordinateIndex = randomize(gridColArray);
-      targetCoordinate = gridColArray[coordinateIndex];
-    }
-
-    // Remove the corresponding coordinate from the coordinate array
-    gridColArray.splice(coordinateIndex, 1);
-
-    console.log(targetCoordinate);
-    console.log(gridColArray);
-
-    // Remove column array once all coordinates have been selected
-    if (gridColArray.length === 0) {
-      availableCoordinates.splice(targetColIndex, 1);
-    }
-
-    return targetCoordinate;
-  };
-
-  const getVerticalCoordinates = function (
-    previousAttack,
-    availableCoordinates
-  ) {
-    //Only need to change row
-    let targetCoordinate;
-    let [column, row] = [...previousAttack];
-    const rowKey = {
-      1: '2',
-      2: '3',
-      3: '4',
-      4: '5',
-      5: '6',
-      6: '7',
-      7: '6'
-    };
-    const nextRow = rowKey[row];
-    const desiredCoordinate = column + nextRow;
-
-    // Remove the corresponding coordinate from the coordinate array
-    const gridIndexKey = {
-      A: 0,
-      B: 1,
-      C: 2,
-      D: 3,
-      E: 4,
-      F: 5,
-      G: 6
-    };
-    const targetColIndex = gridIndexKey[column];
-    const gridColArray = availableCoordinates[targetColIndex];
-    const desiredCoordinateIndex = gridColArray.indexOf(desiredCoordinate);
-    let coordinateIndex;
-
-    // Make sure generated coordinate is still available to attack
-    if (desiredCoordinateIndex !== -1) {
-      targetCoordinate = gridColArray[desiredCoordinateIndex];
-      coordinateIndex = desiredCoordinateIndex;
-    } else {
-      // If desired coordinate is not available for attack, select random coordinate from the column array
-      coordinateIndex = randomize(gridColArray);
-      targetCoordinate = gridColArray[coordinateIndex];
-    }
-
-    gridColArray.splice(coordinateIndex, 1);
-
-    // Remove column array once all coordinates have been selected
-    if (gridColArray.length === 0) {
-      availableCoordinates.splice(targetColIndex, 1);
-    }
-
-    return targetCoordinate;
-  };
-
-  const getAdjacentCoordinates = function (previousHit, gameboard) {
-    const availableCoordinates = gameboard.gridCoordinates;
-    const vert = 'up down';
-    const hori = 'left right';
-    const orientation = [vert, hori];
-    const randomDirection = randomize[orientation];
-
-    if (randomDirection === 'up down') {
-      return getVerticalCoordinates(previousHit, availableCoordinates);
-    } else {
-      return getHorizontalCoordinates(previousHit, availableCoordinates);
-    }
-  };
-
   return {
     id,
     turn,
@@ -626,8 +506,7 @@ const createPlayer = playerType => {
     getShipCoordinates,
     verticalShipCoordinates,
     horizontalShipCoordinates,
-    getAttackCoordinates,
-    getAdjacentCoordinates
+    getAttackCoordinates
   };
 };
 
