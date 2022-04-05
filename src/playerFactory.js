@@ -123,28 +123,35 @@ const createPlayer = playerType => {
   };
 
   const horizontalShipCoordinates = (ship, cpuBoard) => {
-    const availableColumns = cpuBoard.gridColumns;
-    const rows = [1, 2, 3, 4, 5, 6, 7];
+    const availableRows = cpuBoard.gridRows;
 
     //Row number stays the same, but column letter changes
-    const row = getRandomArray(rows);
+    const row = getRandomArray(availableRows);
     let possibleColumns;
 
     if (ship.shipId === 1) {
+      // Carrier is first ship placed, so don't need to worry about any taken positions
       possibleColumns = [
         ['A', 'B', 'C', 'D', 'E'],
         ['B', 'C', 'D', 'E', 'F'],
         ['C', 'D', 'E', 'F', 'G']
       ];
+      //Remove row so that other ships cannot be placed in same row
+      const index = availableRows.indexOf(row);
+      availableRows.splice(index, 1);
     }
 
     if (ship.shipId === 2) {
+      //Battleship is second ship placed, make sure it does not take any position that Carrier has taken
       possibleColumns = [
         ['A', 'B', 'C', 'D'],
         ['B', 'C', 'D', 'E'],
         ['C', 'D', 'E', 'F'],
         ['D', 'E', 'F', 'G']
       ];
+      //Remove row so that other ships cannot be placed in same row
+      const index = availableRows.indexOf(row);
+      availableRows.splice(index, 1);
     }
 
     if (ship.shipId === 3 || ship.shipId === 4) {

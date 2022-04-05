@@ -1,6 +1,6 @@
 const createGameboard = () => {
   const shipLocations = [];
-  // Stores the available grid coordinates, coordinates are stored in a column array
+  // Used for CPU logic - Stores the available grid coordinates, coordinates are stored in a column array
   const gridCoordinates = [
     ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7'],
     ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'],
@@ -10,8 +10,10 @@ const createGameboard = () => {
     ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7'],
     ['G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7']
   ];
-  // Stores the indexes of available grid columns inside of gridCoordinates
+  // Used for CPU logic - Stores the indexes of available grid columns inside of gridCoordinates
   const gridColumns = [0, 1, 2, 3, 4, 5, 6];
+  // Used for CPU logic - Stores grid row numbers available
+  const gridRows = [1, 2, 3, 4, 5, 6, 7];
   const attackedCells = [];
   const hitCells = [];
   const missCells = [];
@@ -65,6 +67,7 @@ const createGameboard = () => {
     shipLocations,
     gridCoordinates,
     gridColumns,
+    gridRows,
     attackedCells,
     hitCells,
     missCells,
