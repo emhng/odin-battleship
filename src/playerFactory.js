@@ -60,7 +60,7 @@ const createPlayer = playerType => {
     // 2 = destroyer
     // 3 = submarine
     // 4 = patrol boat
-    const coordinates = cpuBoard.shipLocations[index].coordinates[index];
+    const coordinates = cpuBoard.shipLocations[index].coordinates[0];
     const [column, row] = coordinates;
     return [column, row];
   };
@@ -277,7 +277,6 @@ const createPlayer = playerType => {
       }
 
       //Check if submarine is horizontal
-      //BUG NOTE: coordinates are undefined / cannot be found only for submarine?
       const isHorizontalSubmarine = getViableVerticalRows(
         3,
         column,
@@ -397,6 +396,9 @@ const createPlayer = playerType => {
         ['E', 'F'],
         ['F', 'G']
       ];
+
+      const submarine = cpuBoard.shipLocations[3];
+      console.log(submarine);
       //Check if carrier is vertical
       const isVerticalCarrier = getViableHorizontalRows(
         0,
@@ -434,7 +436,6 @@ const createPlayer = playerType => {
       }
 
       //Check if submarine is vertical
-      //BUG NOTE: coordinates are undefined / cannot be found only for submarine?
       const isVerticalSub = getViableHorizontalRows(
         3,
         row,
