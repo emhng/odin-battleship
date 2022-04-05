@@ -9,6 +9,7 @@ const createShip = shipId => {
   const shipName = shipInfo[shipId].name;
   const shipLength = shipInfo[shipId].length;
   const shipCoordinates = [];
+  const shipOrientation = '';
   const confirmedHits = [];
   const hit = function (target) {
     if (this.shipCoordinates.indexOf(target) !== -1) {
@@ -31,6 +32,7 @@ const createShip = shipId => {
     shipName,
     shipLength,
     shipCoordinates,
+    shipOrientation,
     confirmedHits,
     hit,
     isSunk

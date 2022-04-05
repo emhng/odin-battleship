@@ -53,6 +53,82 @@ const createPlayer = playerType => {
     return coordinates;
   };
 
+  const getColumnRow = (index, cpuBoard) => {
+    //Index Key:
+    // 0 = carrier
+    // 1 = battleship
+    // 2 = destroyer
+    // 3 = submarine
+    // 4 = patrol boat
+    const coordinates = cpuBoard.shipLocations[index].coordinates[index];
+    const [column, row] = coordinates;
+    return [column, row];
+  };
+
+  const getViableVerticalRows = (index, column, possibleRows, cpuBoard) => {
+    //Index Key:
+    // 0 = carrier
+    // 1 = battleship
+    // 2 = destroyer
+    // 3 = submarine
+    // 4 = patrol boat
+
+    //Check if target ship is horizontal
+    const horizontalShip =
+      cpuBoard.shipLocations[index].shipOrientation === 'horizontal';
+
+    if (horizontalShip) {
+      const [shipColumn, shipRow] = getColumnRow(index, cpuBoard);
+
+      if (shipColumn === column) {
+        //Vertical ship can be in the same column as horizontal ship but it cannot overlap rows
+        const filteredRows = possibleRows.filter(rowPattern => {
+          if (rowPattern.indexOf(+shipRow) === -1) {
+            return rowPattern;
+          }
+        });
+
+        return filteredRows;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const getViableHorizontalRows = (index, row, possibleColumns, cpuBoard) => {
+    //Index Key:
+    // 0 = carrier
+    // 1 = battleship
+    // 2 = destroyer
+    // 3 = submarine
+    // 4 = patrol boat
+
+    //Check if target ship is horizontal
+    const verticalShip =
+      cpuBoard.shipLocations[index].shipOrientation === 'vertical';
+
+    if (verticalShip) {
+      const [shipColumn, shipRow] = getColumnRow(index, cpuBoard);
+
+      if (shipRow === row) {
+        //Change what column
+        const filteredColumns = possibleColumns.filter(columnPattern => {
+          if (columnPattern.indexOf(shipColumn) === -1) {
+            return columnPattern;
+          }
+        });
+
+        return filteredColumns;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
   const verticalShipCoordinates = (ship, cpuBoard) => {
     const availableColumns = cpuBoard.gridColumns;
     const columnKey = {
@@ -88,6 +164,19 @@ const createPlayer = playerType => {
         [3, 4, 5, 6],
         [4, 5, 6, 7]
       ];
+
+      //Check if carrier is horizontal
+      const isHorizontalCarrier = getViableVerticalRows(
+        0,
+        column,
+        possibleRows,
+        cpuBoard
+      );
+
+      if (isHorizontalCarrier !== false) {
+        possibleRows = isHorizontalCarrier;
+      }
+
       //Remove column so that other ships cannot be placed in same column
       const index = availableColumns.indexOf(randomColumnIndex);
       availableColumns.splice(index, 1);
@@ -101,6 +190,44 @@ const createPlayer = playerType => {
         [4, 5, 6],
         [5, 6, 7]
       ];
+
+      //Check if carrier is horizontal
+      const isHorizontalCarrier = getViableVerticalRows(
+        0,
+        column,
+        possibleRows,
+        cpuBoard
+      );
+
+      if (isHorizontalCarrier !== false) {
+        possibleRows = isHorizontalCarrier;
+      }
+
+      //Check if battleship is horizontal
+      const isHorizontalBattleShip = getViableVerticalRows(
+        1,
+        column,
+        possibleRows,
+        cpuBoard
+      );
+
+      if (isHorizontalBattleShip !== false) {
+        possibleRows = isHorizontalBattleShip;
+      }
+
+      if (ship.shipId === 4) {
+        //Check if destroyer is horizontal
+        const isHorizontalDestroyer = getViableVerticalRows(
+          2,
+          column,
+          possibleRows,
+          cpuBoard
+        );
+
+        if (isHorizontalDestroyer !== false) {
+          possibleRows = isHorizontalDestroyer;
+        }
+      }
     }
 
     if (ship.shipId === 5) {
@@ -112,13 +239,61 @@ const createPlayer = playerType => {
         [5, 6],
         [6, 7]
       ];
-    }
 
+      //Check if carrier is horizontal
+      const isHorizontalCarrier = getViableVerticalRows(
+        0,
+        column,
+        possibleRows,
+        cpuBoard
+      );
+
+      if (isHorizontalCarrier !== false) {
+        possibleRows = isHorizontalCarrier;
+      }
+
+      //Check if battleship is horizontal
+      const isHorizontalBattleShip = getViableVerticalRows(
+        1,
+        column,
+        possibleRows,
+        cpuBoard
+      );
+
+      if (isHorizontalBattleShip !== false) {
+        possibleRows = isHorizontalBattleShip;
+      }
+
+      //Check if destroyer is horizontal
+      const isHorizontalDestroyer = getViableVerticalRows(
+        2,
+        column,
+        possibleRows,
+        cpuBoard
+      );
+
+      if (isHorizontalDestroyer !== false) {
+        possibleRows = isHorizontalDestroyer;
+      }
+
+      //Check if submarine is horizontal
+      //BUG NOTE: coordinates are undefined / cannot be found only for submarine?
+      const isHorizontalSubmarine = getViableVerticalRows(
+        3,
+        column,
+        possibleRows,
+        cpuBoard
+      );
+
+      if (isHorizontalSubmarine !== false) {
+        possibleRows = isHorizontalSubmarine;
+      }
+    }
     const positionArray = getRandomArray(possibleRows);
     const coordinates = positionArray.map(row => {
       return column + row;
     });
-
+    ship.shipOrientation = 'vertical';
     return coordinates;
   };
 
@@ -142,13 +317,25 @@ const createPlayer = playerType => {
     }
 
     if (ship.shipId === 2) {
-      //Battleship is second ship placed, make sure it does not take any position that Carrier has taken
       possibleColumns = [
         ['A', 'B', 'C', 'D'],
         ['B', 'C', 'D', 'E'],
         ['C', 'D', 'E', 'F'],
         ['D', 'E', 'F', 'G']
       ];
+
+      //Check if carrier is vertical
+      const isVerticalCarrier = getViableHorizontalRows(
+        0,
+        row,
+        possibleColumns,
+        cpuBoard
+      );
+
+      if (isVerticalCarrier !== false) {
+        possibleColumns = isVerticalCarrier;
+      }
+
       //Remove row so that other ships cannot be placed in same row
       const index = availableRows.indexOf(row);
       availableRows.splice(index, 1);
@@ -162,6 +349,43 @@ const createPlayer = playerType => {
         ['D', 'E', 'F'],
         ['E', 'F', 'G']
       ];
+      //Check if carrier is vertical
+      const isVerticalCarrier = getViableHorizontalRows(
+        0,
+        row,
+        possibleColumns,
+        cpuBoard
+      );
+
+      if (isVerticalCarrier !== false) {
+        possibleColumns = isVerticalCarrier;
+      }
+
+      //Check if battleship is vertical
+      const isVerticalBattleShip = getViableHorizontalRows(
+        1,
+        row,
+        possibleColumns,
+        cpuBoard
+      );
+
+      if (isVerticalBattleShip !== false) {
+        possibleColumns = isVerticalBattleShip;
+      }
+
+      if (ship.shipId === 4) {
+        //Check if destroyer is vertical
+        const isVerticalDestroyer = getViableHorizontalRows(
+          2,
+          row,
+          possibleColumns,
+          cpuBoard
+        );
+
+        if (isVerticalDestroyer !== false) {
+          possibleColumns = isVerticalDestroyer;
+        }
+      }
     }
 
     if (ship.shipId === 5) {
@@ -173,13 +397,61 @@ const createPlayer = playerType => {
         ['E', 'F'],
         ['F', 'G']
       ];
+      //Check if carrier is vertical
+      const isVerticalCarrier = getViableHorizontalRows(
+        0,
+        row,
+        possibleColumns,
+        cpuBoard
+      );
+
+      if (isVerticalCarrier !== false) {
+        possibleColumns = isVerticalCarrier;
+      }
+
+      //Check if battleship is vertical
+      const isVerticalBattleShip = getViableHorizontalRows(
+        1,
+        row,
+        possibleColumns,
+        cpuBoard
+      );
+
+      if (isVerticalBattleShip !== false) {
+        possibleColumns = isVerticalBattleShip;
+      }
+
+      //Check if destroyer is vertical
+      const isVerticalDestroyer = getViableHorizontalRows(
+        2,
+        row,
+        possibleColumns,
+        cpuBoard
+      );
+
+      if (isVerticalDestroyer !== false) {
+        possibleColumns = isVerticalDestroyer;
+      }
+
+      //Check if submarine is vertical
+      //BUG NOTE: coordinates are undefined / cannot be found only for submarine?
+      const isVerticalSub = getViableHorizontalRows(
+        3,
+        row,
+        possibleColumns,
+        cpuBoard
+      );
+
+      if (isVerticalSub !== false) {
+        possibleColumns = isVerticalSub;
+      }
     }
 
     const positionArray = getRandomArray(possibleColumns);
     const coordinates = positionArray.map(column => {
       return column + row;
     });
-
+    ship.shipOrientation = 'horizontal';
     return coordinates;
   };
 

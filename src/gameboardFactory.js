@@ -23,7 +23,8 @@ const createGameboard = () => {
     ship.shipCoordinates.push(...coordinates);
     this.shipLocations.push({
       shipId: ship.shipId,
-      coordinates: [...coordinates]
+      coordinates: [...coordinates],
+      shipOrientation: ship.shipOrientation
     });
   };
 
