@@ -98,7 +98,7 @@ const createPlayer = playerType => {
           });
         }
 
-        //BUG NOTE: Sometimes if column is completely taken, it will filter down to an empty array
+        //NOTE: Sometimes if column is completely taken, it will filter down to an empty array
         //In this case you will need to reroll for a new column or row that's not taken
 
         return filteredPositions;
@@ -235,18 +235,31 @@ const createPlayer = playerType => {
       });
     }
 
-    const positionArray = getRandomArray(possibleRows);
-    const coordinates = positionArray.map(row => {
-      return column + row;
-    });
+    if (possibleRows.length === 0) {
+      console.log('array empty');
+      // If the filtered positions return back as empty, then it means column is completely taken
+      // Need to assign a new column instead and then loop back through the function...
 
-    ship.shipOrientation = 'vertical';
+      // Remove the column from selection ability so it does not get picked up on the next loop
+      const index = availableColumns.indexOf(randomColumnIndex);
+      availableColumns.splice(index, 1);
 
-    //Remove column so that other ships cannot be placed in same column
-    const index = availableColumns.indexOf(randomColumnIndex);
-    availableColumns.splice(index, 1);
+      // Loop through the function again
+      return verticalShipCoordinates(ship, cpuBoard);
+    } else {
+      const positionArray = getRandomArray(possibleRows);
+      const coordinates = positionArray.map(row => {
+        return column + row;
+      });
 
-    return coordinates;
+      ship.shipOrientation = 'vertical';
+
+      //Remove column so that other ships cannot be placed in same column
+      const index = availableColumns.indexOf(randomColumnIndex);
+      availableColumns.splice(index, 1);
+
+      return coordinates;
+    }
   };
 
   const horizontalShipCoordinates = (ship, cpuBoard) => {
@@ -362,18 +375,29 @@ const createPlayer = playerType => {
       });
     }
 
-    const positionArray = getRandomArray(possibleColumns);
-    const coordinates = positionArray.map(column => {
-      return column + row;
-    });
+    if (possibleColumns.length === 0) {
+      console.log('array empty');
+      // If the filtered positions return back as empty, then it means row is completely taken
+      // Need to assign a new row instead and then loop back through the function...
+      // Remove the row from selection ability so it does not get picked up on the next loop
+      const index = availableRows.indexOf(row);
+      availableRows.splice(index, 1);
+      // Loop through the function again
+      return horizontalShipCoordinates(ship, cpuBoard);
+    } else {
+      const positionArray = getRandomArray(possibleColumns);
+      const coordinates = positionArray.map(column => {
+        return column + row;
+      });
 
-    ship.shipOrientation = 'horizontal';
+      ship.shipOrientation = 'horizontal';
 
-    //Remove row so that other ships cannot be placed in same row
-    const index = availableRows.indexOf(row);
-    availableRows.splice(index, 1);
+      //Remove row so that other ships cannot be placed in same row
+      const index = availableRows.indexOf(row);
+      availableRows.splice(index, 1);
 
-    return coordinates;
+      return coordinates;
+    }
   };
 
   const getAttackCoordinates = function (gameboard) {
