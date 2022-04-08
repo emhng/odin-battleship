@@ -52,10 +52,6 @@ body {
   flex-direction: column;
 }
 
-.hidden {
-  display: none;
-}
-
 .disable {
   opacity: 0.1;
 }
@@ -93,6 +89,7 @@ h2#player-turn {
 
 #main {
   width: 40%;
+  transition: 0.5s linear;
 }
 
 #wait {
@@ -180,7 +177,8 @@ h2#player-turn {
 }
 
 #wait,
-#main {
+#main,
+#place-ship {
   margin-left: 5vw;
   margin-right: 5vw;
 }
@@ -211,4 +209,22 @@ h2#player-turn {
   to {
     opacity: 0.2;
   }
+}
+
+div.narrow#container {
+  width: 40%;
+}
+
+div.wide#main {
+  width: 60%;
+}
+
+.cell:hover {
+  border: 1px double #4b6e59;
+  background-color: #cbfbee;
+  animation: blink 1.4s linear infinite;
+}
+
+.hidden {
+  display: none;
 }
