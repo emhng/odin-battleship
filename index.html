@@ -9,14 +9,55 @@
   </head>
   <body>
     <div class="hflex" id="game">
-      <div id="container">
+      <div class="narrow" id="container">
+        <div id="place-ship">
+          <h1>POSITION YOUR FLEET</h1>
+          <p>CURRENTLY POSITIONING CARRIER</p>
+          <div class="ship-grid carrier">
+            <div class="hit-marker" data-ship-id="1"></div>
+            <div class="hit-marker" data-ship-id="1"></div>
+            <div class="hit-marker" data-ship-id="1"></div>
+            <div class="hit-marker" data-ship-id="1"></div>
+            <div class="hit-marker" data-ship-id="1"></div>
+          </div>
+          <div class="hidden ship-grid battleship">
+            <div class="hit-marker" data-ship-id="2"></div>
+            <div class="hit-marker" data-ship-id="2"></div>
+            <div class="hit-marker" data-ship-id="2"></div>
+            <div class="hit-marker" data-ship-id="2"></div>
+            <div class="hit-marker"></div>
+          </div>
+          <div class="hidden ship-grid destroyer">
+            <div class="hit-marker" data-ship-id="3"></div>
+            <div class="hit-marker" data-ship-id="3"></div>
+            <div class="hit-marker" data-ship-id="3"></div>
+            <div class="hit-marker"></div>
+            <div class="hit-marker"></div>
+          </div>
+          <div class="hidden ship-grid submarine">
+            <div class="hit-marker" data-ship-id="4"></div>
+            <div class="hit-marker" data-ship-id="4"></div>
+            <div class="hit-marker" data-ship-id="4"></div>
+            <div class="hit-marker"></div>
+            <div class="hit-marker"></div>
+          </div>
+          <div class="hidden ship-grid patrol">
+            <div class="hit-marker" data-ship-id="5"></div>
+            <div class="hit-marker" data-ship-id="5"></div>
+            <div class="hit-marker"></div>
+            <div class="hit-marker"></div>
+            <div class="hit-marker"></div>
+          </div>
+          <button>ROTATE SHIP</button>
+          <p>CLICK ON GRID TO CONFIRM PLACEMENT</p>
+        </div>
         <div class="hflex" id="wait">
           <div class="hidden" id="prompt">
             <p>/// WARNING</p>
             <h1>INCOMING ATTACK</h1>
           </div>
         </div>
-        <div class="vflex" id="radar">
+        <div class="vflex hidden" id="radar">
           <div class="hflex" id="label">
             <h2>RADAR</h2>
             <h2 class="blink" id="player-turn">MISSILES READY</h2>
@@ -143,7 +184,7 @@
           </div>
         </div>
       </div>
-      <div class="vflex" id="main">
+      <div class="wide vflex" id="main">
         <h1>FLEET POSITION</h1>
         <div class="grid">
           <div class="col" data-col="1">
