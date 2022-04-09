@@ -55,4 +55,81 @@ const displayPrompt = () => {
   promptDivEl.classList.toggle('prompt-blink');
 };
 
-export { renderShip, renderAttack, displayPrompt };
+const addHoverClass = (targetIndex, ship, orientation, cellArray) => {
+  if (orientation === 'horizontal') {
+    for (let i = 0; i < ship.shipLength; i++) {
+      cellArray[targetIndex + 7 * i].classList.add('hover');
+    }
+  } else {
+    for (let i = 0; i < ship.shipLength; i++) {
+      cellArray[targetIndex + i].classList.add('hover');
+    }
+  }
+};
+
+const getCellCoordFromIndex = (ship, targetIndex, orientation, cellArray) => {
+  let result = [];
+  if (orientation === 'horizontal') {
+    for (let i = 0; i < ship.shipLength; i++) {
+      result.push(cellArray[targetIndex + 7 * i].dataset.coord);
+    }
+  } else {
+    for (let i = 0; i < ship.shipLength; i++) {
+      result.push(cellArray[targetIndex + i].dataset.coord);
+    }
+  }
+  return result;
+};
+
+const removeHoverClass = (targetIndex, ship, orientation, cellArray) => {
+  const previousHoverHTMLCollection = document.getElementsByClassName('hover');
+  const previousHoverArray = [...previousHoverHTMLCollection];
+
+  previousHoverArray.forEach(cell => {
+    let currentHover1,
+      currentHover2,
+      currentHover3,
+      currentHover4,
+      currentHover5;
+
+    let notCurrentHoverCells;
+
+    if (ship.shipId === 1) {
+      [
+        currentHover1,
+        currentHover2,
+        currentHover3,
+        currentHover4,
+        currentHover5
+      ] = getCellCoordFromIndex(ship, targetIndex, orientation, cellArray);
+
+      notCurrentHoverCells =
+        cell.dataset.coord !== currentHover1 &&
+        cell.dataset.coord !== currentHover2 &&
+        cell.dataset.coord !== currentHover3 &&
+        cell.dataset.coord !== currentHover4 &&
+        cell.dataset.coord !== currentHover5;
+    }
+
+    if (notCurrentHoverCells) {
+      cell.classList.remove('hover');
+    }
+  });
+};
+
+const displayShipHover = (ship, targetItem, orientation) => {
+  const cellNodeList = document.querySelectorAll(
+    'div.wide#main div.grid div.cell'
+  );
+  const cellArray = [...cellNodeList];
+
+  const targetCoordinate = targetItem.dataset.coord;
+  const targetIndex = cellArray.findIndex(
+    cell => cell.dataset.coord === targetCoordinate
+  );
+
+  addHoverClass(targetIndex, ship, orientation, cellArray);
+  removeHoverClass(targetIndex, ship, orientation, cellArray);
+};
+
+export { renderShip, renderAttack, displayPrompt, displayShipHover };

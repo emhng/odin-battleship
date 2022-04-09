@@ -5,6 +5,7 @@ import { createGameboard } from './gameboardFactory';
 import { renderShip } from './renderDOM';
 import { renderAttack } from './renderDOM';
 import { displayPrompt } from './renderDOM';
+import { displayShipHover } from './renderDOM';
 
 // Player settings
 const player = createPlayer();
@@ -12,11 +13,15 @@ const playerShips = player.ships;
 const [carrier, battleship, destroyer, submarine, patrolBoat] = playerShips;
 
 const playerBoard = createGameboard();
-playerBoard.placeShip(carrier, 'A1', 'B1', 'C1', 'D1', 'E1');
-playerBoard.placeShip(battleship, 'C3', 'C4', 'C5', 'C6');
-playerBoard.placeShip(destroyer, 'G2', 'G3', 'G4');
-playerBoard.placeShip(submarine, 'E6', 'F6', 'G6');
-playerBoard.placeShip(patrolBoat, 'A7', 'B7');
+
+const playerGridDivEl = document.querySelector('div.wide#main div.grid');
+
+playerGridDivEl.addEventListener('mouseover', target => {
+  const targetItem = target.target;
+  if (targetItem.classList.contains('cell')) {
+    displayShipHover(carrier, targetItem, 'horizontal');
+  }
+});
 
 playerShips.forEach(ship => {
   renderShip(ship);
