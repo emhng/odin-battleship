@@ -23,6 +23,11 @@ playerGridDivEl.addEventListener('mouseover', target => {
   }
 });
 
+playerGridDivEl.addEventListener('click', target => {
+  const targetItem = target.target;
+  console.log(targetItem.parentNode);
+});
+
 playerShips.forEach(ship => {
   renderShip(ship);
 });

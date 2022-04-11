@@ -55,6 +55,85 @@ const displayPrompt = () => {
   promptDivEl.classList.toggle('prompt-blink');
 };
 
+const offsetTargetIndex = (
+  currentColumn,
+  currentRow,
+  targetIndex,
+  ship,
+  orientation
+) => {
+  let offset;
+  let limit;
+  let offsetIndex;
+  // Defining the offset amount for each ship
+  if (ship.shipId === 1) {
+    limit = [4, 5, 6, 7];
+    orientation === 'horizontal'
+      ? (offset = {
+          4: 7,
+          5: 7 * 2,
+          6: 7 * 3,
+          7: 7 * 4
+        })
+      : (offset = {
+          4: 1,
+          5: 2,
+          6: 3,
+          7: 4
+        });
+  } else if (ship.shipId === 2) {
+    limit = [5, 6, 7];
+    orientation === 'horizontal'
+      ? (offset = {
+          5: 7,
+          6: 7 * 2,
+          7: 7 * 3
+        })
+      : (offset = {
+          5: 1,
+          6: 2,
+          7: 3
+        });
+  } else if (ship.shipId === 3 || ship.shipId === 4) {
+    limit = [6, 7];
+    orientation === 'horizontal'
+      ? (offset = {
+          6: 7,
+          7: 7 * 2
+        })
+      : (offset = {
+          6: 1,
+          7: 2
+        });
+  } else {
+    limit = [7];
+    orientation === 'horizontal'
+      ? (offset = {
+          7: 7
+        })
+      : (offset = {
+          7: 1
+        });
+  }
+
+  const isColumnLimit = limit.indexOf(+currentColumn) !== -1;
+  const isRowLimit = limit.indexOf(+currentRow) !== -1;
+
+  // Offset the targetIndex if mouse is over a column or row that is too short for the ship
+  if (orientation === 'horizontal' && isColumnLimit) {
+    offsetIndex = targetIndex - offset[+currentColumn];
+    return offsetIndex;
+  }
+
+  if (orientation === 'vertical' && isRowLimit) {
+    offsetIndex = targetIndex - offset[+currentRow];
+    return offsetIndex;
+  } else {
+    // If the mouse is not over a column or row that would be too short, then just return normal targetIndex
+    return targetIndex;
+  }
+};
+
 const addHoverClass = (targetIndex, ship, orientation, cellArray) => {
   if (orientation === 'horizontal') {
     for (let i = 0; i < ship.shipLength; i++) {
@@ -124,11 +203,23 @@ const displayShipHover = (ship, targetItem, orientation) => {
   const cellArray = [...cellNodeList];
 
   const targetCoordinate = targetItem.dataset.coord;
-  const targetIndex = cellArray.findIndex(
+  let targetIndex = cellArray.findIndex(
     cell => cell.dataset.coord === targetCoordinate
   );
 
+  const currentColumn = targetItem.parentNode.dataset.col;
+  const currentRow = targetItem.dataset.row;
+
+  targetIndex = offsetTargetIndex(
+    currentColumn,
+    currentRow,
+    targetIndex,
+    ship,
+    orientation
+  );
+
   addHoverClass(targetIndex, ship, orientation, cellArray);
+
   removeHoverClass(targetIndex, ship, orientation, cellArray);
 };
 
