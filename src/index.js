@@ -16,10 +16,18 @@ const playerBoard = createGameboard();
 
 const playerGridDivEl = document.querySelector('div.wide#main div.grid');
 
+let shipOrientation = 'horizontal';
+const buttonEl = document.querySelector('div#place-ship button');
+buttonEl.addEventListener('click', () => {
+  shipOrientation === 'horizontal'
+    ? (shipOrientation = 'vertical')
+    : (shipOrientation = 'horizontal');
+});
+
 playerGridDivEl.addEventListener('mouseover', target => {
   const targetItem = target.target;
   if (targetItem.classList.contains('cell')) {
-    displayShipHover(carrier, targetItem, 'horizontal');
+    displayShipHover(carrier, targetItem, shipOrientation);
   }
 });
 
