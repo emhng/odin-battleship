@@ -10,44 +10,65 @@
   <body>
     <div class="hflex" id="game">
       <div class="narrow" id="container">
-        <div id="place-ship">
+        <div class="stack" id="place-ship">
           <h1>POSITION YOUR FLEET</h1>
-          <p>CURRENTLY POSITIONING CARRIER</p>
-          <div class="ship-grid carrier">
-            <div class="hit-marker" data-ship-id="1"></div>
-            <div class="hit-marker" data-ship-id="1"></div>
-            <div class="hit-marker" data-ship-id="1"></div>
-            <div class="hit-marker" data-ship-id="1"></div>
-            <div class="hit-marker" data-ship-id="1"></div>
+          <p>CURRENTLY POSITIONING:</p>
+
+          <div id="player-carrier">
+            <h2>CARRIER</h2>
+            <div class="ship-grid carrier">
+              <div class="hit-marker" data-ship-id="1"></div>
+              <div class="hit-marker" data-ship-id="1"></div>
+              <div class="hit-marker" data-ship-id="1"></div>
+              <div class="hit-marker" data-ship-id="1"></div>
+              <div class="hit-marker" data-ship-id="1"></div>
+            </div>
           </div>
-          <div class="hidden ship-grid battleship">
-            <div class="hit-marker" data-ship-id="2"></div>
-            <div class="hit-marker" data-ship-id="2"></div>
-            <div class="hit-marker" data-ship-id="2"></div>
-            <div class="hit-marker" data-ship-id="2"></div>
-            <div class="hit-marker"></div>
+
+          <div class="hidden" id="player-battleship">
+            <h2>BATTLESHIP</h2>
+            <div class="ship-grid battleship">
+              <div class="hit-marker" data-ship-id="2"></div>
+              <div class="hit-marker" data-ship-id="2"></div>
+              <div class="hit-marker" data-ship-id="2"></div>
+              <div class="hit-marker" data-ship-id="2"></div>
+              <div class="hit-marker"></div>
+            </div>
           </div>
-          <div class="hidden ship-grid destroyer">
-            <div class="hit-marker" data-ship-id="3"></div>
-            <div class="hit-marker" data-ship-id="3"></div>
-            <div class="hit-marker" data-ship-id="3"></div>
-            <div class="hit-marker"></div>
-            <div class="hit-marker"></div>
+
+          <div class="hidden" id="player-destroyer">
+            <h2>DESTROYER</h2>
+            <div class="ship-grid destroyer">
+              <div class="hit-marker" data-ship-id="3"></div>
+              <div class="hit-marker" data-ship-id="3"></div>
+              <div class="hit-marker" data-ship-id="3"></div>
+              <div class="hit-marker"></div>
+              <div class="hit-marker"></div>
+            </div>
           </div>
-          <div class="hidden ship-grid submarine">
-            <div class="hit-marker" data-ship-id="4"></div>
-            <div class="hit-marker" data-ship-id="4"></div>
-            <div class="hit-marker" data-ship-id="4"></div>
-            <div class="hit-marker"></div>
-            <div class="hit-marker"></div>
+
+          <div class="hidden" id="player-sub">
+            <h2>SUBMARINE</h2>
+            <div class="ship-grid submarine">
+              <div class="hit-marker" data-ship-id="4"></div>
+              <div class="hit-marker" data-ship-id="4"></div>
+              <div class="hit-marker" data-ship-id="4"></div>
+              <div class="hit-marker"></div>
+              <div class="hit-marker"></div>
+            </div>
           </div>
-          <div class="hidden ship-grid patrol">
-            <div class="hit-marker" data-ship-id="5"></div>
-            <div class="hit-marker" data-ship-id="5"></div>
-            <div class="hit-marker"></div>
-            <div class="hit-marker"></div>
-            <div class="hit-marker"></div>
+
+          <div class="hidden" id="player-patrol">
+            <h2>PATROL BOAT</h2>
+            <div class="ship-grid patrol">
+              <div class="hit-marker" data-ship-id="5"></div>
+              <div class="hit-marker" data-ship-id="5"></div>
+              <div class="hit-marker"></div>
+              <div class="hit-marker"></div>
+              <div class="hit-marker"></div>
+            </div>
           </div>
+
           <button>ROTATE SHIP</button>
           <p>CLICK ON GRID TO CONFIRM PLACEMENT</p>
         </div>
@@ -156,8 +177,8 @@
                   <div class="hit-marker" data-ship-id="3"></div>
                   <div class="hit-marker" data-ship-id="3"></div>
                   <div class="hit-marker" data-ship-id="3"></div>
-                  <div class="hit-marker"></div>
-                  <div class="hit-marker"></div>
+                  <div class="hit-marker" data-ship-id="3"></div>
+                  <div class="hit-marker" data-ship-id="3"></div>
                 </div>
               </div>
               <div class="enemy">
@@ -166,8 +187,8 @@
                   <div class="hit-marker" data-ship-id="4"></div>
                   <div class="hit-marker" data-ship-id="4"></div>
                   <div class="hit-marker" data-ship-id="4"></div>
-                  <div class="hit-marker"></div>
-                  <div class="hit-marker"></div>
+                  <div class="hit-marker" data-ship-id="4"></div>
+                  <div class="hit-marker" data-ship-id="4"></div>
                 </div>
               </div>
               <div class="enemy">
@@ -175,9 +196,9 @@
                 <div class="ship-grid patrol">
                   <div class="hit-marker" data-ship-id="5"></div>
                   <div class="hit-marker" data-ship-id="5"></div>
-                  <div class="hit-marker"></div>
-                  <div class="hit-marker"></div>
-                  <div class="hit-marker"></div>
+                  <div class="hit-marker" data-ship-id="5"></div>
+                  <div class="hit-marker" data-ship-id="5"></div>
+                  <div class="hit-marker" data-ship-id="5"></div>
                 </div>
               </div>
             </div>
