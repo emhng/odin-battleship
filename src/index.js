@@ -120,8 +120,9 @@ radarGridEl.addEventListener('click', target => {
 
     // CPU logic to attack player board
     if (
-      (player.turn === false && cpuBoard.defeat() === false) ||
-      (player.turn === false && playerBoard.defeat() === false)
+      player.turn === false &&
+      cpuBoard.defeat() === false &&
+      playerBoard.defeat() === false
     ) {
       setTimeout(() => {
         displayPrompt();
