@@ -6,6 +6,8 @@ import { renderShip } from './renderDOM';
 import { renderAttack } from './renderDOM';
 import { displayPrompt } from './renderDOM';
 import { displayShipHover } from './renderDOM';
+import { clearHoverClass } from './renderDOM';
+import { hideStartScreenItems } from './renderDOM';
 
 // Player settings
 const player = createPlayer();
@@ -26,18 +28,62 @@ buttonEl.addEventListener('click', () => {
 
 playerGridDivEl.addEventListener('mouseover', target => {
   const targetItem = target.target;
+
+  const isCarrier = playerBoard.shipLocations.length === 0;
+  const isBattleship = playerBoard.shipLocations.length === 1;
+  const isDestroyer = playerBoard.shipLocations.length === 2;
+  const isSubmarine = playerBoard.shipLocations.length === 3;
+  const isPatrol = playerBoard.shipLocations.length === 4;
+
   if (targetItem.classList.contains('cell')) {
-    displayShipHover(carrier, targetItem, shipOrientation);
+    if (isCarrier) {
+      displayShipHover(carrier, targetItem, shipOrientation);
+    } else if (isBattleship) {
+      displayShipHover(battleship, targetItem, shipOrientation);
+    } else if (isDestroyer) {
+      displayShipHover(destroyer, targetItem, shipOrientation);
+    } else if (isSubmarine) {
+      displayShipHover(submarine, targetItem, shipOrientation);
+    } else if (isPatrol) {
+      displayShipHover(patrolBoat, targetItem, shipOrientation);
+    }
   }
 });
 
 playerGridDivEl.addEventListener('click', target => {
-  const targetItem = target.target;
-  console.log(targetItem.parentNode);
-});
+  const coordinates = [];
 
-playerShips.forEach(ship => {
-  renderShip(ship);
+  const hoveredCellsHTMLCollection = document.getElementsByClassName('hover');
+  const hoveredCellsArray = [...hoveredCellsHTMLCollection];
+
+  hoveredCellsArray.forEach(cell => {
+    coordinates.push(cell.dataset.coord);
+  });
+
+  const isCarrier = playerBoard.shipLocations.length === 0;
+  const isBattleship = playerBoard.shipLocations.length === 1;
+  const isDestroyer = playerBoard.shipLocations.length === 2;
+  const isSubmarine = playerBoard.shipLocations.length === 3;
+  const isPatrol = playerBoard.shipLocations.length === 4;
+
+  if (isCarrier && coordinates.length === 5) {
+    playerBoard.placeShip(carrier, ...coordinates);
+  } else if (isBattleship && coordinates.length === 4) {
+    playerBoard.placeShip(battleship, ...coordinates);
+  } else if (isDestroyer && coordinates.length === 3) {
+    playerBoard.placeShip(destroyer, ...coordinates);
+  } else if (isSubmarine && coordinates.length === 3) {
+    playerBoard.placeShip(submarine, ...coordinates);
+  } else if (isPatrol && coordinates.length === 2) {
+    playerBoard.placeShip(patrolBoat, ...coordinates);
+    hideStartScreenItems();
+  }
+
+  clearHoverClass();
+
+  playerShips.forEach(ship => {
+    renderShip(ship);
+  });
 });
 
 // CPU settings

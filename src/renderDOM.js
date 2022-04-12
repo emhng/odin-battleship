@@ -137,11 +137,17 @@ const offsetTargetIndex = (
 const addHoverClass = (targetIndex, ship, orientation, cellArray) => {
   if (orientation === 'horizontal') {
     for (let i = 0; i < ship.shipLength; i++) {
-      cellArray[targetIndex + 7 * i].classList.add('hover');
+      //Only add hover class if the cell is not already taken
+      if (!cellArray[targetIndex + 7 * i].classList.contains('ship')) {
+        cellArray[targetIndex + 7 * i].classList.add('hover');
+      }
     }
   } else {
     for (let i = 0; i < ship.shipLength; i++) {
-      cellArray[targetIndex + i].classList.add('hover');
+      //Only add hover class if the cell is not already taken
+      if (!cellArray[targetIndex + i].classList.contains('ship')) {
+        cellArray[targetIndex + i].classList.add('hover');
+      }
     }
   }
 };
@@ -188,6 +194,42 @@ const removeHoverClass = (targetIndex, ship, orientation, cellArray) => {
         cell.dataset.coord !== currentHover3 &&
         cell.dataset.coord !== currentHover4 &&
         cell.dataset.coord !== currentHover5;
+    } else if (ship.shipId === 2) {
+      [
+        currentHover1,
+        currentHover2,
+        currentHover3,
+        currentHover4
+      ] = getCellCoordFromIndex(ship, targetIndex, orientation, cellArray);
+
+      notCurrentHoverCells =
+        cell.dataset.coord !== currentHover1 &&
+        cell.dataset.coord !== currentHover2 &&
+        cell.dataset.coord !== currentHover3 &&
+        cell.dataset.coord !== currentHover4;
+    } else if (ship.shipId === 3 || ship.shipId === 4) {
+      [currentHover1, currentHover2, currentHover3] = getCellCoordFromIndex(
+        ship,
+        targetIndex,
+        orientation,
+        cellArray
+      );
+
+      notCurrentHoverCells =
+        cell.dataset.coord !== currentHover1 &&
+        cell.dataset.coord !== currentHover2 &&
+        cell.dataset.coord !== currentHover3;
+    } else {
+      [currentHover1, currentHover2] = getCellCoordFromIndex(
+        ship,
+        targetIndex,
+        orientation,
+        cellArray
+      );
+
+      notCurrentHoverCells =
+        cell.dataset.coord !== currentHover1 &&
+        cell.dataset.coord !== currentHover2;
     }
 
     if (notCurrentHoverCells) {
@@ -223,4 +265,26 @@ const displayShipHover = (ship, targetItem, orientation) => {
   removeHoverClass(targetIndex, ship, orientation, cellArray);
 };
 
-export { renderShip, renderAttack, displayPrompt, displayShipHover };
+const clearHoverClass = () => {
+  const hoverClassHTMLCollection = document.getElementsByClassName('hover');
+  const hoverClassArray = [...hoverClassHTMLCollection];
+  hoverClassArray.forEach(cell => {
+    cell.classList.remove('hover');
+  });
+};
+
+const hideStartScreenItems = () => {
+  document.querySelector('div#place-ship').classList.add('hidden');
+  document.querySelector('div.wide#main').classList.remove('wide');
+  document.querySelector('div.narrow#container').classList.remove('narrow');
+  document.querySelector('div#radar').classList.remove('hidden');
+};
+
+export {
+  renderShip,
+  renderAttack,
+  displayPrompt,
+  displayShipHover,
+  clearHoverClass,
+  hideStartScreenItems
+};

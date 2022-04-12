@@ -73,6 +73,7 @@ h2#player-turn {
   position: relative;
   scrollbar-width: thin;
   scrollbar-color: #4b6e59 black;
+  transition: 0.5s linear;
 }
 
 #container::-webkit-scrollbar {
@@ -89,7 +90,6 @@ h2#player-turn {
 
 #main {
   width: 40%;
-  transition: 0.5s linear;
 }
 
 #wait {
