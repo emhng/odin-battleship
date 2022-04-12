@@ -280,11 +280,20 @@ const hideStartScreenItems = () => {
   document.querySelector('div#radar').classList.remove('hidden');
 };
 
+const displayNextShip = (currentShipSelector, nextShipSelector) => {
+  const previousShip = document.querySelector(currentShipSelector);
+  previousShip.classList.add('hidden');
+
+  const nextShip = document.querySelector(nextShipSelector);
+  nextShip.classList.remove('hidden');
+};
+
 export {
   renderShip,
   renderAttack,
   displayPrompt,
   displayShipHover,
   clearHoverClass,
-  hideStartScreenItems
+  hideStartScreenItems,
+  displayNextShip
 };

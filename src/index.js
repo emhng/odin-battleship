@@ -8,6 +8,7 @@ import { displayPrompt } from './renderDOM';
 import { displayShipHover } from './renderDOM';
 import { clearHoverClass } from './renderDOM';
 import { hideStartScreenItems } from './renderDOM';
+import { displayNextShip } from './renderDOM';
 
 // Player settings
 const player = createPlayer();
@@ -68,12 +69,16 @@ playerGridDivEl.addEventListener('click', target => {
 
   if (isCarrier && coordinates.length === 5) {
     playerBoard.placeShip(carrier, ...coordinates);
+    displayNextShip('div#player-carrier', 'div#player-battleship');
   } else if (isBattleship && coordinates.length === 4) {
     playerBoard.placeShip(battleship, ...coordinates);
+    displayNextShip('div#player-battleship', 'div#player-destroyer');
   } else if (isDestroyer && coordinates.length === 3) {
     playerBoard.placeShip(destroyer, ...coordinates);
+    displayNextShip('div#player-destroyer', 'div#player-sub');
   } else if (isSubmarine && coordinates.length === 3) {
     playerBoard.placeShip(submarine, ...coordinates);
+    displayNextShip('div#player-sub', 'div#player-patrol');
   } else if (isPatrol && coordinates.length === 2) {
     playerBoard.placeShip(patrolBoat, ...coordinates);
     hideStartScreenItems();
