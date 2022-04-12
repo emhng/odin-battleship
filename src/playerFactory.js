@@ -39,7 +39,7 @@ const createPlayer = playerType => {
   const getShipCoordinates = function (ship, cpuBoard) {
     const orientation = ['vertical', 'horizontal'];
     const randomOrientation = getRandomArray(orientation);
-    console.log(randomOrientation);
+
     let coordinates;
     if (randomOrientation === 'vertical') {
       coordinates = this.verticalShipCoordinates(ship, cpuBoard);
@@ -157,7 +157,6 @@ const createPlayer = playerType => {
 
         if (isHorizontalShip !== false) {
           possibleRows = isHorizontalShip;
-          console.log(possibleRows);
         }
       });
     }
@@ -183,7 +182,6 @@ const createPlayer = playerType => {
 
         if (isHorizontalShip !== false) {
           possibleRows = isHorizontalShip;
-          console.log(possibleRows);
         }
       });
 
@@ -201,7 +199,6 @@ const createPlayer = playerType => {
 
           if (isHorizontalShip !== false) {
             possibleRows = isHorizontalShip;
-            console.log(possibleRows);
           }
         });
       }
@@ -230,17 +227,15 @@ const createPlayer = playerType => {
 
         if (isHorizontalShip !== false) {
           possibleRows = isHorizontalShip;
-          console.log(possibleRows);
         }
       });
     }
 
     if (possibleRows.length === 0) {
-      console.log('array empty');
       // If the filtered positions return back as empty, then it means column is completely taken
       // Need to assign a new column instead and then loop back through the function...
 
-      // Remove the column from selection ability so it does not get picked up on the next loop
+      // Remove the column from selection so it does not get picked up on the next loop
       const index = availableColumns.indexOf(randomColumnIndex);
       availableColumns.splice(index, 1);
 
@@ -270,7 +265,6 @@ const createPlayer = playerType => {
     let possibleColumns;
 
     if (ship.shipId === 1) {
-      // Carrier is first ship placed, so don't need to worry about any taken positions
       possibleColumns = [
         ['A', 'B', 'C', 'D', 'E'],
         ['B', 'C', 'D', 'E', 'F'],
@@ -298,7 +292,6 @@ const createPlayer = playerType => {
 
         if (isVerticalShip !== false) {
           possibleColumns = isVerticalShip;
-          console.log(possibleColumns);
         }
       });
     }
@@ -324,7 +317,6 @@ const createPlayer = playerType => {
 
         if (isVerticalShip !== false) {
           possibleColumns = isVerticalShip;
-          console.log(possibleColumns);
         }
       });
 
@@ -342,7 +334,6 @@ const createPlayer = playerType => {
 
           if (isVerticalShip !== false) {
             possibleColumns = isVerticalShip;
-            console.log(possibleColumns);
           }
         });
       }
@@ -370,18 +361,18 @@ const createPlayer = playerType => {
 
         if (isVerticalShip !== false) {
           possibleColumns = isVerticalShip;
-          console.log(possibleColumns);
         }
       });
     }
 
     if (possibleColumns.length === 0) {
-      console.log('array empty');
       // If the filtered positions return back as empty, then it means row is completely taken
       // Need to assign a new row instead and then loop back through the function...
-      // Remove the row from selection ability so it does not get picked up on the next loop
+
+      // Remove the row from selection so it does not get picked up on the next loop
       const index = availableRows.indexOf(row);
       availableRows.splice(index, 1);
+
       // Loop through the function again
       return horizontalShipCoordinates(ship, cpuBoard);
     } else {
@@ -419,8 +410,6 @@ const createPlayer = playerType => {
     if (gridColumn.length === 0) {
       availableColumns.splice(availableColumnIndex, 1);
     }
-    console.log(availableCoordinates);
-    console.log(availableColumns);
 
     return targetCoordinate;
   };
