@@ -13,4 +13,4 @@ Your game must include the following:
 
 ## Learnings
 
-Following the project brief on being selective on what factory function or module each function is should go was good practice. I feel like I have a better understanding of how to organize my code now.
+Following the project brief on being selective on what factory function or module each function should go under was good practice. I feel like I have a better understanding of how to organize my code now.
