@@ -105,7 +105,6 @@ const cpuBoard = createGameboard('CPU');
 cpuShips.forEach(ship => {
   const randomShipCoords = cpu.getShipCoordinates(ship, cpuBoard);
   cpuBoard.placeShip(ship, ...randomShipCoords);
-  renderShip(ship, 'CPU');
 });
 
 //Game progresses when user clicks on enemy grid
@@ -138,9 +137,8 @@ radarGridEl.addEventListener('click', target => {
 
         setTimeout(() => {
           displayPrompt();
+          player.turn = true;
         }, 2000);
-
-        player.turn = true;
       }, 3000);
     }
   }
