@@ -183,6 +183,10 @@ h2#player-turn {
   margin-right: 5vw;
 }
 
+#place-ship {
+  margin-top: 6.8vh;
+}
+
 .enemy {
   width: 25%;
 }
@@ -237,4 +241,16 @@ div.wide#main div.grid {
 
 .hidden {
   display: none;
+}
+
+button {
+  background-color: #4b6e59;
+  padding: 1rem;
+  border: 1px solid black;
+  width: 100%;
+  color: black;
+}
+
+button:active {
+  transform: translateY(0.15rem);
 }
