@@ -17,16 +17,19 @@ const [carrier, battleship, destroyer, submarine, patrolBoat] = playerShips;
 
 const playerBoard = createGameboard();
 
-const playerGridDivEl = document.querySelector('div.wide#main div.grid');
-
+// Rotate ship orientation when placing ships
 let shipOrientation = 'horizontal';
 const buttonEl = document.querySelector('div#place-ship button');
 buttonEl.addEventListener('click', () => {
   shipOrientation === 'horizontal'
     ? (shipOrientation = 'vertical')
     : (shipOrientation = 'horizontal');
+
+  clearHoverClass();
 });
 
+// Display highlight of where ship will be placed when placing ships
+const playerGridDivEl = document.querySelector('div.wide#main div.grid');
 playerGridDivEl.addEventListener('mouseover', target => {
   const targetItem = target.target;
 
@@ -51,6 +54,7 @@ playerGridDivEl.addEventListener('mouseover', target => {
   }
 });
 
+// Place player ships
 playerGridDivEl.addEventListener('click', target => {
   const coordinates = [];
 
@@ -95,15 +99,14 @@ playerGridDivEl.addEventListener('click', target => {
 const cpu = createPlayer('CPU');
 const cpuShips = cpu.ships;
 
-const cpuBoard = createGameboard();
+const cpuBoard = createGameboard('CPU');
 
+// Randomly place cpu ships
 cpuShips.forEach(ship => {
   const randomShipCoords = cpu.getShipCoordinates(ship, cpuBoard);
   cpuBoard.placeShip(ship, ...randomShipCoords);
   renderShip(ship, 'CPU');
 });
-
-console.log(cpuBoard.shipLocations);
 
 //Game progresses when user clicks on enemy grid
 const radarGridEl = document.querySelector('div#radar div.grid');
@@ -116,7 +119,10 @@ radarGridEl.addEventListener('click', target => {
     player.turn = false;
 
     // CPU logic to attack player board
-    if (player.turn === false) {
+    if (
+      (player.turn === false && cpuBoard.defeat() === false) ||
+      (player.turn === false && playerBoard.defeat() === false)
+    ) {
       setTimeout(() => {
         displayPrompt();
       }, 1000);
@@ -128,12 +134,24 @@ radarGridEl.addEventListener('click', target => {
 
         playerBoard.receiveAttack(cpuAttackCoordinates, playerShips);
         renderAttack(cpuAttackCoordinates, playerBoard, cpu);
-        player.turn = true;
 
         setTimeout(() => {
           displayPrompt();
         }, 2000);
+
+        player.turn = true;
       }, 3000);
     }
   }
+
+  // Display game over message and restart game
+  setTimeout(() => {
+    if (cpuBoard.defeat() === true || playerBoard.defeat() === true) {
+      cpuBoard.defeat() === true
+        ? alert('Enemy fleet defeated')
+        : alert('Our fleet has been destroyed');
+
+      location.reload();
+    }
+  }, 100);
 });
