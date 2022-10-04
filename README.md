@@ -2,7 +2,7 @@
 
 ![Preview](preview.png)
 
-[Play Battleship Game](emhng.github.io/odin-battleship/)
+[Play Battleship Game](https://emhng.github.io/odin-battleship/)
 
 ## Playing locally
 
