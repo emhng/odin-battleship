@@ -1,8 +1,18 @@
 # TOP Javascript Course Project - Battleship
 
-03/28/2022 ~ 04/12/2022
+    ![preview](preview.png)
 
-## Objectives
+[Play Battleship Game](emhng.github.io/odin-battleship/)
+
+## Playing locally
+
+If you'd like to play locally:
+
+1. Download the repo by clicking on Code -> Download Zip
+2. Unzip the downloaded repo and open the folder
+3. Open the Dist folder and click on index.html
+
+## Project Objectives
 
 Using the test driven development process, create a battleship game.
 
