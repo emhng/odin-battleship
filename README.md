@@ -1,6 +1,6 @@
 # TOP Javascript Course Project - Battleship
 
-    ![preview](preview.png)
+![Preview](preview.png)
 
 [Play Battleship Game](emhng.github.io/odin-battleship/)
 
